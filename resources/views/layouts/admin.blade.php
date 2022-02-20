@@ -24,7 +24,7 @@
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        <a class="nav-link" data-widget="pushmenu" href="javascript:void(0)" role="button" onclick="sideBarAction()"><i class="fas fa-bars"></i></a>
       </li>
     </ul>
 
@@ -86,19 +86,6 @@
 
 <script src="{{ mix('js/admin/app.js') }}"></script> 
 @stack('scripts')
-<script>
-/** add active class and stay opened when selected */
-var url = window.location;
-
-// for sidebar menu entirely but not cover treeview
-$('ul.nav-sidebar a').filter(function() {
-    return this.href == url;
-}).addClass('active');
-
-// for treeview
-$('ul.nav-treeview a').filter(function() {
-    return this.href == url;
-}).parentsUntil(".nav-sidebar > .nav-treeview").addClass('menu-open').prev('a').addClass('active');
-</script>
+<script src="{{ asset('js/admin/script.js') }}"></script> 
 </body>
 </html>
