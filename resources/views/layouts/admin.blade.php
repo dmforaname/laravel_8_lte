@@ -57,7 +57,7 @@
           <img src="dist/img/user4-128x128.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block"> Diaz Mahendra </a>
+          <a href="javascript:void(0)" class="d-block"> {{ auth()->user()->name }} </a>
         </div>
       </div>
 
