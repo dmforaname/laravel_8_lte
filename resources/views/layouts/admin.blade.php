@@ -30,7 +30,24 @@
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
-    
+      <li class="nav-item dropdown user user-menu">
+          <div class="collapse navbar-collapse" id="navbar-list-4">
+              <ul class="navbar-nav">
+                  <li class="nav-item dropdown">
+                      
+                      <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                          <img src="{{asset('/dist/img/user4-128x128.jpg')}}" class="user-image-1 img-circle elevation-2" alt="User Image">
+                          <span class="hidden-xs">{{ auth()->user()->email }}</span>
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                          <a class="dropdown-item" href="#">Dashboard</a>
+                          <a class="dropdown-item" href="#">Edit Profile</a>
+                          <a class="dropdown-item" href="#">Log Out</a>
+                      </div>
+                  </li>   
+              </ul>
+          </div>
+      </li>  
       <li class="nav-item">
         <a class="nav-link" data-widget="fullscreen" href="#" role="button">
           <i class="fas fa-expand-arrows-alt"></i>
