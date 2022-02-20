@@ -22,4 +22,7 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::resource('/admin', DashboardController::class)->only(['index']);
+Route::middleware(['auth'])->prefix('admin')->group(function () {
+    
+    Route::resource('/', DashboardController::class)->only(['index']);
+});
