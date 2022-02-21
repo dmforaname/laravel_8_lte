@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,5 +24,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::middleware(['auth','IsAdmin'])->prefix('admin')->group(function () {
     
-    Route::resource('/', DashboardController::class)->only(['index']);
+    Route::resource('/', Admin\DashboardController::class)->only(['index']);
+    Route::resource('/user-manager', Admin\UserManagerController::class)->only(['index']);
 });

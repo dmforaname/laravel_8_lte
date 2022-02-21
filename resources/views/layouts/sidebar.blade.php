@@ -13,10 +13,10 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="test" class="nav-link">
+            <a href="{{route('user-manager.index')}}" class="nav-link">
               <i class="nav-icon fa fa-users"></i>
               <p>
-                Employees
+                User Manager
               </p>
             </a>
           </li>
