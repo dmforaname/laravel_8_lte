@@ -102,7 +102,7 @@
 <!-- ./wrapper -->
 
 <script src="{{ mix('js/admin/app.js') }}"></script> 
-@stack('scripts')
 <script src="{{ asset('js/admin/script.js') }}"></script> 
+@stack('scripts')
 </body>
 </html>

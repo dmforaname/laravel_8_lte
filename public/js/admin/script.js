@@ -60,3 +60,9 @@ function getCookie(name) {
   }
   return null;
 }
+
+function onFocusForm(id,ms){
+  setTimeout(function () {
+      $("#"+id+"").focus();
+  }, ms);
+}
