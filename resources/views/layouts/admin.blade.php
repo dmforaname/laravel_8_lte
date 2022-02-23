@@ -42,7 +42,7 @@
                       <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                           <a class="dropdown-item" href="#">Dashboard</a>
                           <a class="dropdown-item" href="#">Edit Profile</a>
-                          <a class="dropdown-item" href="#">Log Out</a>
+                          <a class="dropdown-item" href="javascript:void(0)" onclick="event.preventDefault(); clickLogout();">Log Out</a>
                       </div>
                   </li>   
               </ul>

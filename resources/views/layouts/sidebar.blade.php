@@ -23,7 +23,7 @@
          
           <li class="nav-item">
 
-            <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            <a class="nav-link" href="javascript:void(0)" onclick="event.preventDefault(); clickLogout();">
                 <i class="nav-icon fa fa-power-off"></i>
                 <p>
                   {{ __('Logout') }}

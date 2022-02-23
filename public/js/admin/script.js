@@ -46,7 +46,7 @@ function setCookie(name, value) {
   date.setTime(date.getTime() + (2 * 60 * 60 * 1000));
   expires = "; expires=" + date.toUTCString();
 
-  document.cookie = name + "=" + (value || "") + expires + "; path=/";
+  document.cookie = name + "=" + (value || "") + expires + "; path=/; "+ " SameSite=LAX;";
 }
 
 // get cookie function
@@ -65,4 +65,34 @@ function onFocusForm(id,ms){
   setTimeout(function () {
       $("#"+id+"").focus();
   }, ms);
+}
+
+function eraseCookie(name) {   
+  document.cookie = name+'=; Max-Age=-99999999;';  
+}
+
+$(function() {
+  
+  var token = getCookie('token')
+
+  if (!token) {
+
+    $.ajax({
+      url : "/user/get-token",
+      method : "GET",
+      async : true,
+      dataType : 'json',
+      success: function(data){
+        
+        setCookie('token',data.data)
+      }
+    });
+  }
+
+});
+
+function clickLogout()
+{
+  eraseCookie('token'); 
+  document.getElementById('logout-form').submit();
 }
