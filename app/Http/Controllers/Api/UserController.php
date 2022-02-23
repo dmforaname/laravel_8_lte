@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Traits\ApiResponser;
 use Auth;
 use Illuminate\Support\Facades\Log;
+use App\Models\User;
+use DataTables;
 
 class UserController extends Controller
 {
@@ -16,9 +18,16 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if ($request->ajax()) {
+
+            $data = User::latest()->get();
+
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->make(true);
+        }
     }
 
     /**

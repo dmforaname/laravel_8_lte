@@ -56,7 +56,17 @@
               </div>
               <div class="card-body">
                 
-                User Manager
+              <table class="table table-sm table-bordered table-hover table-striped dataTables">
+                <thead class="thead-dark">
+                    <tr>
+                      <th class="noField">No</th>
+                      <th>Name</th>
+                      <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
                 
               </div>
             </div>
@@ -68,10 +78,49 @@
 @endsection
 
 @push('scripts')
+<script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap4.min.js"></script>
 <script>
+
 $( "#collapsedCard" ).click(function() {
 
     onFocusForm("userName",500);
 });
+$(function () { 
+
+  // Get datatables
+  $('.dataTables').DataTable({
+
+    paging: true,
+    lengthChange: false,
+    searching: false,
+    ordering: true,
+    info: true,
+    autoWidth: false,
+    responsive: true,
+    processing: true,
+    serverSide: true,
+    ajax: "{{ route('users.index') }}",
+    columns: [
+        {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+        {data: 'name', name: 'name'},
+        {data: 'email', name: 'email'},
+    ]
+  });
+})
+
 </script>
+@endpush
+
+
+
+@push('styles')
+
+  <link href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+  <style> 
+    .noField {
+      width: 5%;
+    }
+  </style>
+
 @endpush
