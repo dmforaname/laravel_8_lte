@@ -27,3 +27,8 @@ Route::middleware(['auth','IsAdmin'])->prefix('admin')->group(function () {
     Route::resource('/', Admin\DashboardController::class)->only(['index']);
     Route::resource('/user-manager', Admin\UserManagerController::class)->only(['index']);
 });
+
+Route::get('/user/get-token', [App\Http\Controllers\Api\UserController::class, 'getToken'])->middleware('auth');
+Route::get('/logout', function (){
+    return redirect('/login');
+});

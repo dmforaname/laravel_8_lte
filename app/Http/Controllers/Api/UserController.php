@@ -86,4 +86,16 @@ class UserController extends Controller
     {
         //
     }
+
+    public function getToken()
+    {
+        $user = Auth::user();
+
+        if ($user){
+
+            return $this->success($user->createToken('authToken')->plainTextToken,'Success');
+        }
+
+        return $this->error('Unauthenticated',403);
+    }
 }
