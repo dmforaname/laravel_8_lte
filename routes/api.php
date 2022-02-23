@@ -20,4 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::resource('/users', Api\UserController::class)->only(['index']);
+Route::resource('/users', Api\UserController::class)->only(['index'])->middleware('auth:sanctum');

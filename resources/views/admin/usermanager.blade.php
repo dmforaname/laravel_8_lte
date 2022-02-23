@@ -86,6 +86,13 @@ $( "#collapsedCard" ).click(function() {
 
     onFocusForm("userName",500);
 });
+
+$.ajaxSetup({
+    headers: {
+        'Authorization': 'Bearer '+getCookie('token')
+    }
+});
+
 $(function () { 
 
   // Get datatables
