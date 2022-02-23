@@ -18,10 +18,10 @@ function sideBarAction()
 
   if (bodyClass === "sidebar-mini"){
 
-    setCookie('sidebarMenu','close');
+    setCookie('sidebarMenu','close',24);
   }else{
 
-    setCookie('sidebarMenu','open');
+    setCookie('sidebarMenu','open',24);
   }  
 }
 
@@ -38,12 +38,12 @@ if (getCookie('sidebarMenu')){
 }
 
 // set cookie function
-function setCookie(name, value) {
+function setCookie(name, value, ex) {
 
   var expires = "";
 
   var date = new Date();
-  date.setTime(date.getTime() + (2 * 60 * 60 * 1000));
+  date.setTime(date.getTime() + (ex * 60 * 60 * 1000));
   expires = "; expires=" + date.toUTCString();
 
   document.cookie = name + "=" + (value || "") + expires + "; path=/; "+ " SameSite=LAX;";
@@ -77,19 +77,24 @@ $(function() {
 
   if (!token) {
 
-    $.ajax({
-      url : "/user/get-token",
-      method : "GET",
-      async : true,
-      dataType : 'json',
-      success: function(data){
-        
-        setCookie('token',data.data)
-      }
-    });
+    getToken()
   }
 
 });
+
+function getToken(){
+
+  $.ajax({
+    url : "/user/get-token",
+    method : "GET",
+    async : true,
+    dataType : 'json',
+    success: function(data){
+      
+      setCookie('token',data.data,8)
+    }
+  });
+}
 
 function clickLogout()
 {
