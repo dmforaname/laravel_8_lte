@@ -31,4 +31,4 @@ Route::middleware(['auth','IsAdmin'])->prefix('admin')->group(function () {
 Route::get('/user/get-token', [App\Http\Controllers\Api\UserController::class, 'getToken'])->middleware('auth');
 Route::get('/logout', function (){
     return redirect('/login');
-});
+})->middleware('auth');
