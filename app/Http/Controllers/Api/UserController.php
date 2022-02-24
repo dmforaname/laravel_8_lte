@@ -107,4 +107,14 @@ class UserController extends Controller
 
         return $this->error('Unauthenticated',403);
     }
+
+    public function userCheck(Request $request)
+    {
+        if (auth('sanctum')->check()){
+
+            return $this->success(true,'Success');
+        }
+
+        return $this->error('Unauthenticated',403);
+    }
 }
