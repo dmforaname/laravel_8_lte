@@ -19,5 +19,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
+Route::get('/users-check', [Api\UserController::class,'userCheck']);
 Route::resource('/users', Api\UserController::class)->only(['index'])->middleware('auth:sanctum');
