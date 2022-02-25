@@ -87,15 +87,13 @@ $( "#collapsedCard" ).click(function() {
     onFocusForm("userName",500);
 });
 
-$.ajaxSetup({
-    headers: {
-        'Authorization': 'Bearer '+getCookie('token')
-    }
+$.when(checkToken()).done(function (ct) {
+
+    getDataTables()
 });
 
-$(function () { 
+function getDataTables() {
 
-  // Get datatables
   $('.dataTables').DataTable({
 
     paging: true,
@@ -114,7 +112,8 @@ $(function () {
         {data: 'email', name: 'email'},
     ]
   });
-})
+}
+
 
 </script>
 @endpush

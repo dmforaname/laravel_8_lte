@@ -90,8 +90,39 @@ function getToken(){
     async : true,
     dataType : 'json',
     success: function(data){
+
+      const now = new Date()
       
       setCookie('token',data.data,8)
+      setCookie("token_ttl", now.getTime() + (8 * 60 * 60 * 1000),8)
+    }
+  });
+}
+
+$.ajaxSetup({
+  headers: {
+      'Authorization': 'Bearer '+getCookie('token')
+  }
+});
+
+function checkToken(){
+
+  return $.ajax({
+    url : "/api/users-check",
+    method : "GET",
+    async : true,
+    dataType : 'json',
+    success: function(data){
+      
+      console.log('checkToken ',data.data)
+
+      return data.data
+      
+    },
+    error:function (data){
+
+      getToken()
+      location.reload()
     }
   });
 }
