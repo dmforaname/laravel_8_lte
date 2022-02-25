@@ -82,38 +82,22 @@
 <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap4.min.js"></script>
 <script>
 
+var columns = [
+        {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+        {data: 'name', name: 'name'},
+        {data: 'email', name: 'email'},
+    ];
+var url = "{{ route('users.index') }}";
+
 $( "#collapsedCard" ).click(function() {
 
-    onFocusForm("userName",500);
+    onFocusForm("userName",200);
 });
 
 $.when(checkToken()).done(function (ct) {
 
-    getDataTables()
+    getDataTables(url,columns)
 });
-
-function getDataTables() {
-
-  $('.dataTables').DataTable({
-
-    paging: true,
-    lengthChange: false,
-    searching: false,
-    ordering: true,
-    info: true,
-    autoWidth: false,
-    responsive: true,
-    processing: true,
-    serverSide: true,
-    ajax: "{{ route('users.index') }}",
-    columns: [
-        {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-        {data: 'name', name: 'name'},
-        {data: 'email', name: 'email'},
-    ]
-  });
-}
-
 
 </script>
 @endpush

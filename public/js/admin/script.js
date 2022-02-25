@@ -122,7 +122,7 @@ function checkToken(){
     error:function (data){
 
       getToken()
-      location.reload()
+      //location.reload()
     }
   });
 }
@@ -131,4 +131,22 @@ function clickLogout()
 {
   eraseCookie('token'); 
   document.getElementById('logout-form').submit();
+}
+
+function getDataTables(url,col) {
+
+  $('.dataTables').DataTable({
+
+    paging: true,
+    lengthChange: false,
+    searching: true,
+    ordering: true,
+    info: true,
+    autoWidth: false,
+    responsive: true,
+    processing: true,
+    serverSide: true,
+    ajax: url,
+    columns: col
+  });
 }
