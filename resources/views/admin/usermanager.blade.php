@@ -62,6 +62,7 @@
                       <th class="noField">No</th>
                       <th>Name</th>
                       <th>Email</th>
+                      <th>Role</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -86,6 +87,7 @@ var columns = [
         {data: 'DT_RowIndex', name: 'DT_RowIndex'},
         {data: 'name', name: 'name'},
         {data: 'email', name: 'email'},
+        {data: 'roles', name: 'roles'},
     ];
 var url = "{{ route('users.index') }}";
 

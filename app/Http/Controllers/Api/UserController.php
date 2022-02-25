@@ -3,16 +3,24 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Repositories\Api\UserRepository;
 use App\Traits\ApiResponser;
-use Auth;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use App\Models\User;
-use DataTables;
+use Auth;
 
 class UserController extends Controller
 {
     use ApiResponser;
+
+    /**
+     * @param UserRepository $usr
+     */
+    public function __construct(UserRepository $usr)
+    {
+        $this->user = $usr;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -22,11 +30,7 @@ class UserController extends Controller
     {
         if ($request->ajax()) {
 
-            $data = User::latest()->get();
-
-            return Datatables::of($data)
-                ->addIndexColumn()
-                ->make(true);
+            return $this->user->getDatatableList();
         }
     }
 
