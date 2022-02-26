@@ -121,4 +121,17 @@ class UserController extends Controller
 
         return $this->error('Unauthenticated',403);
     }
+
+    /**
+    * The user has logged out of the application.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @return mixed
+    */
+    public function logout(Request $request) {
+
+        $request->user()->currentAccessToken()->delete();
+        
+        return $this->success(true,'Success');
+    }
 }

@@ -33,3 +33,14 @@
       </div>
     </section>
 @endsection
+
+@push('scripts')
+<script>
+
+$.when(checkToken()).done(function (ct) {
+
+    
+});
+
+</script>
+@endpush

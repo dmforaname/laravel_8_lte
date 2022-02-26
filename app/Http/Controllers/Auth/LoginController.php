@@ -40,10 +40,11 @@ class LoginController extends Controller
     }
 
     public function logout() {
-
+        /*
         Auth::user()->tokens->each(function($token, $key) {
             $token->delete();
         });
+        */
         
         Auth::logout();
     

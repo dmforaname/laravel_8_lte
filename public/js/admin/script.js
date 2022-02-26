@@ -67,10 +67,11 @@ function onFocusForm(id,ms){
   }, ms);
 }
 
-function eraseCookie(name) {   
-  document.cookie = name+'=; Max-Age=-99999999;';  
-}
+function eraseCookie(name) { 
 
+  document.cookie = name+'=; Path=/; Max-Age=-99999999;';  
+}
+/*
 $(function() {
   
   var token = getCookie('token')
@@ -81,10 +82,10 @@ $(function() {
   }
 
 });
-
+*/
 function getToken(){
 
-  $.ajax({
+  return $.ajax({
     url : "/user/get-token",
     method : "GET",
     async : true,
@@ -101,7 +102,8 @@ function getToken(){
 
 $.ajaxSetup({
   headers: {
-      'Authorization': 'Bearer '+getCookie('token')
+      'Authorization': 'Bearer '+getCookie('token'),
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
   }
 });
 
@@ -114,23 +116,57 @@ function checkToken(){
     dataType : 'json',
     success: function(data){
       
-      console.log('checkToken ',data.data)
-
       return data.data
-      
     },
     error:function (data){
 
-      getToken()
-      //location.reload()
+      setTimeout(function () {
+
+        checkTokenError()
+      }, 2000);
     }
   });
 }
 
+function checkTokenError() {
+
+  var token = getCookie('token')
+
+  if (token) {
+
+    eraseCookie('token')
+    eraseCookie('token_ttl')
+  }
+
+  $.when(getToken()).done(function (gt) {
+
+    //if (gt)
+    //  location.reload()
+  });   
+}
+
 function clickLogout()
 {
-  eraseCookie('token'); 
-  document.getElementById('logout-form').submit();
+  //document.getElementById('logout-form').submit();
+
+  return $.ajax({
+    url : "/api/logout",
+    method : "POST",
+    async : true,
+    dataType : 'json',
+    success: function(data){
+
+      console.log('clickLogout')
+      eraseCookie('token')
+      eraseCookie('token_ttl')
+      
+      document.getElementById('logout-form').submit();
+    },
+    error:function (err){
+
+      console.log(err)
+    }
+  });
 }
 
 function getDataTables(url,col) {

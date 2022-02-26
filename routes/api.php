@@ -21,3 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/users-check', [Api\UserController::class,'userCheck']);
 Route::resource('/users', Api\UserController::class)->only(['index'])->middleware('auth:sanctum');
+Route::post('/logout', [Api\UserController::class,'logout'])->middleware('auth:sanctum');

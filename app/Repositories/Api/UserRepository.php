@@ -27,13 +27,14 @@ class UserRepository extends BaseRepository
 
     public function getDatatableList()
     {
-        $data = self::getUserRole();
-
-        return Datatables::of($data)
+        return Datatables::of(self::getUserRole())
         ->addIndexColumn()
         ->addColumn('roles', function($data) {
 
             return $data->roles->first()->name;
+        })
+        ->setRowId(function ($data) {
+            return $data->id;
         })
         ->make(true);
     }
