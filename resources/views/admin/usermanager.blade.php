@@ -98,8 +98,15 @@ $( "#collapsedCard" ).click(function() {
 
 $.when(checkToken()).done(function (ct) {
 
-    getDataTables(url,columns)
-});
+      getDataTables(url,columns)
+
+  }).fail(function () {
+
+    setTimeout(function () {
+
+      getDataTables(url,columns)
+    }, 5000);
+  });
 
 </script>
 @endpush

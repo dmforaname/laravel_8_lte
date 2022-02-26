@@ -43,7 +43,7 @@ function setCookie(name, value, ex) {
   var expires = "";
 
   var date = new Date();
-  date.setTime(date.getTime() + (ex * 60 * 60 * 1000));
+  date.setTime(date.getTime() + (ex * 24 * 60 * 60 * 1000));
   expires = "; expires=" + date.toUTCString();
 
   document.cookie = name + "=" + (value || "") + expires + "; path=/; "+ " SameSite=LAX;";
@@ -83,6 +83,23 @@ $(function() {
 
 });
 */
+
+$(function() {
+  
+  var token = getCookie('token_ttl')
+
+  if (token){
+
+    const now = new Date().getTime()
+    const newToken = token - (48*60*60*1000)
+
+    if (now > newToken) {
+
+      checkTokenError()
+    }
+  }
+});
+
 function getToken(){
 
   return $.ajax({
@@ -94,18 +111,24 @@ function getToken(){
 
       const now = new Date()
       
-      setCookie('token',data.data,8)
-      setCookie("token_ttl", now.getTime() + (8 * 60 * 60 * 1000),8)
+      var x = 30;
+      setCookie('token',data.data,x)
+      setCookie("token_ttl", now.getTime() + (x * 24 * 60 * 60 * 1000),x)
     }
   });
 }
 
-$.ajaxSetup({
-  headers: {
-      'Authorization': 'Bearer '+getCookie('token'),
-      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-  }
-});
+function setupHeader(){
+
+  $.ajaxSetup({
+    headers: {
+        'Authorization': 'Bearer '+getCookie('token'),
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+  });
+}
+
+setupHeader()
 
 function checkToken(){
 
@@ -120,10 +143,10 @@ function checkToken(){
     },
     error:function (data){
 
-      setTimeout(function () {
+      //setTimeout(function () {
 
         checkTokenError()
-      }, 2000);
+      //}, 2000);
     }
   });
 }
@@ -140,8 +163,8 @@ function checkTokenError() {
 
   $.when(getToken()).done(function (gt) {
 
-    //if (gt)
-    //  location.reload()
+    if (gt)
+      setupHeader()
   });   
 }
 
