@@ -76,6 +76,51 @@
         </div>
       </div>
     </section>
+
+<!-- edit modal -->
+<div class="modal fade" id="ajaxModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modalHeading"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form enctype="multipart/form-data" id="formEdit" action="javascript:void(0)" >  
+            <div class="modal-body">
+              <div class="form-group">
+                  <label for="name" class="col-sm-4 control-label">Name</label>
+                  <div class="col-sm-12">
+                      <input type="text" class="form-control" id="id" name="id" hidden>
+                      <input type="text" class="form-control" id="nameView" name="name" placeholder="Enter First Name" maxlength="50">
+                      <small class="text-danger" id="firstNameEditError"></small>
+                  </div>
+              </div>
+              <div class="form-group">
+                  <label class="col-sm-2 control-label">Email</label>
+                  <div class="col-sm-12">
+                      <input type="email" id="emailView" name="email"  placeholder="Enter Email" class="form-control">
+                      <small class="text-danger" id="emailEditError"></small>
+                  </div>
+              </div>
+              <div class="form-group">
+                  <label for="role" class="col-sm-4 control-label">Role</label>
+                  <div class="col-sm-12">
+                      <input type="text" class="form-control" id="roleView" name="role" placeholder="Enter Role" maxlength="50">
+                      <small class="text-danger" id="roleError"></small>
+                  </div>
+              </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+              
+              <button type="submit" class="btn btn-primary btn-submit">Edit</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>   
+<!-- end edit modal -->
 @endsection
 
 @push('scripts')
@@ -105,9 +150,32 @@ $.when(checkToken())
 $(document).ready(function() {
 
   $('.dataTables tbody').on('click', 'tr', function () {
+
+    $("#overlay").fadeIn();　
     
     trId = $(this).attr('id');
     console.log('click ID : ',trId)
+    // Send delete data to backend
+    $.ajax({
+      method : "GET",
+      url:"/api/users/"+trId,
+      success: function (data) {
+
+          var data = data.data
+          $("#overlay").fadeOut();
+          $('#modalHeading').html("Edit User");
+          $('#ajaxModal').modal('show');
+          $('#id').val(data.id);
+          $('#nameView').val(data.name).prop('disabled', true);
+          $('#emailView').val(data.email).prop('disabled', true);
+          $('#roleView').val(data.role).prop('disabled', true);
+      },
+      error: function (data) {
+          
+          // Get error data
+          console.log('Error:', data);
+      }
+    });
   });
 });
 </script>
@@ -119,9 +187,6 @@ $(document).ready(function() {
   <style> 
     .noField {
       width: 5%;
-    }
-    .clickRow {
-        cursor: pointer;
     }
   </style>
 @endpush

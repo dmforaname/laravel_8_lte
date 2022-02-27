@@ -17,7 +17,8 @@
 
   <!-- Preloader -->
   <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__shake" src="/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+    <span class="spinner-grow text-info"></span>
+    <!--<img class="animation__shake" src="/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">-->
   </div>
 
   <!-- Navbar -->
@@ -101,7 +102,14 @@
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
-
+<!-- Loader -->
+<div id="overlay">
+  <div class="cv-spinner">
+    <span class="spinner"></span>
+    <!--<img class="animation__shake" src="/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">-->
+  </div>
+</div>
+<!-- ./Loader -->
 <script src="{{ mix('js/admin/app.js') }}"></script> 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script src="{{ asset('js/admin/script.js') }}"></script> 

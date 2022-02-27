@@ -20,14 +20,14 @@ class UserRepository extends BaseRepository
         $this->model = $user;
     }
 
-    public function getUserRole()
+    public function getUserWithRole()
     {
         return $this->model->with('roles')->latest()->get();
     }
 
     public function getDatatableList()
     {
-        return Datatables::of(self::getUserRole())
+        return Datatables::of(self::getUserWithRole())
         ->addIndexColumn()
         ->addColumn('roles', function($data) {
 
@@ -40,5 +40,16 @@ class UserRepository extends BaseRepository
             return "clickRow";
         } )
         ->make(true);
+    }
+
+    public function getUserRole($user)
+    {
+        $collection = collect($user);
+        $role = $user->roles->pluck('name');
+        //$permission = $user->getPermissionsViaRoles()->pluck('name')->unique();
+        $collection->put('role',$role->first());
+        //$collection->put('permission',$permission);
+
+        return $collection;
     }
 }

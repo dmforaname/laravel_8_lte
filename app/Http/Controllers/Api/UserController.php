@@ -63,7 +63,10 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = $this->user->getById($id);
+        $data = $this->user->getUserRole($user);
+
+        return $this->success($data,trans('message.retrieve',['X' => 'User']));
     }
 
     /**
