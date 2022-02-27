@@ -96,16 +96,10 @@ $( "#collapsedCard" ).click(function() {
     onFocusForm("userName",200);
 });
 
-$.when(checkToken()).done(function (ct) {
+$.when(checkToken())
+  .always(function (ct) {
 
       getDataTables(url,columns)
-
-  }).fail(function () {
-
-    setTimeout(function () {
-
-      getDataTables(url,columns)
-    }, 5000);
   });
 
 </script>

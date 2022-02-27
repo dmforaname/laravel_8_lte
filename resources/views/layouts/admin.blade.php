@@ -7,6 +7,7 @@
   <title>{{ config('app.name', 'GR Tech') }}</title>
 
   <link href="{{ mix('css/admin/style.css') }}" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
   @stack('styles')
 
 </head>
@@ -102,6 +103,7 @@
 <!-- ./wrapper -->
 
 <script src="{{ mix('js/admin/app.js') }}"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script src="{{ asset('js/admin/script.js') }}"></script> 
 @stack('scripts')
 </body>

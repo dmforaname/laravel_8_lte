@@ -130,7 +130,7 @@ function setupHeader(){
 
 setupHeader()
 
-function checkToken(){
+async function checkToken(){
 
   return $.ajax({
     url : "/api/users-check",
@@ -194,6 +194,8 @@ function clickLogout()
 
 function getDataTables(url,col) {
 
+  console.log('getDataTables')
+
   $('.dataTables').DataTable({
 
     paging: true,
@@ -205,7 +207,23 @@ function getDataTables(url,col) {
     responsive: true,
     processing: true,
     serverSide: true,
-    ajax: url,
+    ajax: {
+      url: url,
+      error: function (jqXHR, textStatus, errorThrown) {
+         
+        console.log(errorThrown)
+        if(errorThrown === 'Unauthorized'){
+
+          reCallTable(url,col)
+        }    
+      }
+    },
     columns: col
   });
+}
+
+function reCallTable(url,col) {
+
+  $('.dataTables').DataTable().destroy();
+  getDataTables(url,col)
 }
