@@ -20,7 +20,7 @@
             <!-- add data -->
             <div class="card collapsed-card" ref="collapsedCard">
                 <div class="card-header btn" data-card-widget="collapse" id="collapsedCard">
-                    <h3 class="card-title">Add New Department</h3>
+                    <h3 class="card-title">Add New User</h3>
                     <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                         <i class="fas fa-plus"></i>
@@ -102,10 +102,16 @@ $.when(checkToken())
       getDataTables(url,columns)
   });
 
+$(document).ready(function() {
+
+  $('.dataTables tbody').on('click', 'tr', function () {
+    
+    trId = $(this).attr('id');
+    console.log('click ID : ',trId)
+  });
+});
 </script>
 @endpush
-
-
 
 @push('styles')
 
@@ -114,6 +120,8 @@ $.when(checkToken())
     .noField {
       width: 5%;
     }
+    .clickRow {
+        cursor: pointer;
+    }
   </style>
-
 @endpush

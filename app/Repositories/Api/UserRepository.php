@@ -36,6 +36,9 @@ class UserRepository extends BaseRepository
         ->setRowId(function ($data) {
             return $data->id;
         })
+        ->setRowClass(function ($data) {
+            return "clickRow";
+        } )
         ->make(true);
     }
 }
