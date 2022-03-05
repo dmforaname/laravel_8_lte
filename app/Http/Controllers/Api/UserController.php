@@ -137,4 +137,9 @@ class UserController extends Controller
         
         return $this->success(true,'Success');
     }
+
+    public function getListRoles()
+    {
+        return $this->user->getListRoles();
+    }
 }

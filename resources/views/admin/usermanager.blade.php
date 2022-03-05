@@ -107,14 +107,15 @@
               <div class="form-group">
                   <label for="role" class="col-sm-4 control-label">Role</label>
                   <div class="col-sm-12">
-                      <input type="text" class="form-control" id="roleView" name="role" placeholder="Enter Role" maxlength="50">
+                      <select class="form-control" id="roleView" name="role"></select>
                       <small class="text-danger" id="roleError"></small>
                   </div>
               </div>
             </div>
-            <div class="modal-footer justify-content-between">
-              
-              <button type="submit" class="btn btn-primary btn-submit">Edit</button>
+            <div class="modal-footer">
+              <button type="submit" id="edit-button" class="btn btn-primary" onclick="event.preventDefault(); clickEdit();">Edit</button>
+              <button type="submit" id="save-button" class="btn btn-success" onclick="event.preventDefault(); clickSave();">Save</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
             </form>
         </div>
@@ -152,23 +153,30 @@ $(document).ready(function() {
   $('.dataTables tbody').on('click', 'tr', function () {
 
     $("#overlay").fadeIn();　
+    $("#save-button").hide();
     
     trId = $(this).attr('id');
-    console.log('click ID : ',trId)
+    // console.log('click ID : ',trId)
     // Send delete data to backend
     $.ajax({
       method : "GET",
       url:"/api/users/"+trId,
       success: function (data) {
 
-          var data = data.data
+        var data = data.data
+
+        $.when(listRoles(data.role))
+        .always(function (d) {
+
           $("#overlay").fadeOut();
           $('#modalHeading').html("Edit User");
           $('#ajaxModal').modal('show');
           $('#id').val(data.id);
           $('#nameView').val(data.name).prop('disabled', true);
           $('#emailView').val(data.email).prop('disabled', true);
-          $('#roleView').val(data.role).prop('disabled', true);
+          $('#roleView').prop('disabled', true);
+          $("#edit-button").show();
+        });
       },
       error: function (data) {
           
@@ -178,6 +186,37 @@ $(document).ready(function() {
     });
   });
 });
+
+function clickEdit()
+{
+  $('#nameView').prop('disabled', false);
+  $('#emailView').prop('disabled', false);
+  $('#roleView').prop('disabled', false);
+  $("#edit-button").hide();
+  $("#save-button").show();
+}
+
+function listRoles(role)
+{
+  return $.ajax({
+      
+      url : "{{ route('Api.listRoles') }}",
+      method : "GET",
+      async : true,
+      dataType : 'json',
+      success: function(data){
+        
+        var html = '';
+        var i;
+        for(i=0; i<data.length; i++){
+            html += '<option value='+data[i]+'>'+data[i]+'</option>';
+        }
+        $('#roleView').html(html);
+        // Set selected value
+        $('#roleView').val(role)
+      }
+  });
+}
 </script>
 @endpush
 

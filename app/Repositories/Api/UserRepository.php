@@ -5,6 +5,7 @@ namespace App\Repositories\Api;
 use App\Models\User;
 use App\Repositories\BaseRepository;
 use DataTables;
+use Spatie\Permission\Models\Role;
 
 class UserRepository extends BaseRepository
 {
@@ -51,5 +52,10 @@ class UserRepository extends BaseRepository
         //$collection->put('permission',$permission);
 
         return $collection;
+    }
+
+    public function getListRoles()
+    {
+        return Role::all()->pluck('name');
     }
 }

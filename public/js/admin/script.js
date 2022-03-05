@@ -194,8 +194,6 @@ function clickLogout()
 
 function getDataTables(url,col) {
 
-  console.log('getDataTables')
-
   $('.dataTables').DataTable({
 
     paging: true,

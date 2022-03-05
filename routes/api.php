@@ -20,5 +20,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/users-check', [Api\UserController::class,'userCheck']);
+Route::get('/users/role', [Api\UserController::class,'getListRoles'])->name('Api.listRoles');
 Route::resource('/users', Api\UserController::class)->only(['index','show'])->middleware('auth:sanctum');
 Route::post('/logout', [Api\UserController::class,'logout'])->middleware('auth:sanctum');
