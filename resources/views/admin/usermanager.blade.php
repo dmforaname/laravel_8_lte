@@ -94,7 +94,7 @@
               <div class="form-group">
                   <label for="name" class="col-sm-4 control-label">Name</label>
                   <div class="col-sm-12">
-                      <input type="text" class="form-control" id="id" name="id" hidden>
+                      <input type="text" class="form-control" id="uuid" name="uuid" hidden>
                       <input type="text" class="form-control" id="nameView" name="name" placeholder="Enter First Name" maxlength="50">
                       <small class="text-danger" id="firstNameEditError"></small>
                   </div>
@@ -173,7 +173,7 @@ $(document).ready(function() {
           $("#overlay").fadeOut();
           $('#modalHeading').html("Edit User");
           $('#ajaxModal').modal('show');
-          $('#id').val(data.id);
+          $('#uuid').val(data.uuid);
           $('#nameView').val(data.name).prop('disabled', true);
           $('#emailView').val(data.email).prop('disabled', true);
           $('#roleView').prop('disabled', true);
