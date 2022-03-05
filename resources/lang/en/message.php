@@ -11,5 +11,5 @@ return [
    'delete' => ':X Deleted',
    'error' => 'error occurred',
    'update_check' => 'You cant update<br>This :X using by :Y',
-
+   'success' => 'Success',
 ];

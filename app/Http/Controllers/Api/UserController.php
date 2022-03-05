@@ -140,6 +140,8 @@ class UserController extends Controller
 
     public function getListRoles()
     {
-        return $this->user->getListRoles();
+        $data = $this->user->getListRoles();
+
+        return $this->success($data,trans('message.retrieve',['X' => 'roles']));
     }
 }
