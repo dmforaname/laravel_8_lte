@@ -78,4 +78,14 @@ class BaseRepository implements RepositoryInterface
     {
         return $this->model->firstOrCreate($first,$create);
     }
+
+    /**
+     * @param  string $uuid
+     *
+     * @return mixed
+     */
+    public function getByUuid(string $uuid)
+    {
+        return $this->model->Uuid($uuid);
+    }
 }

@@ -63,7 +63,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = $this->user->getById($id);
+        $user = $this->user->getByUuid($id)->makeHidden(['id','created_at','updated_at','email_verified_at']);
         $data = $this->user->getUserRole($user);
 
         return $this->success($data,trans('message.retrieve',['X' => 'User']));

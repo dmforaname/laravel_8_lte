@@ -23,7 +23,8 @@ class UserRepository extends BaseRepository
 
     public function getUserWithRole()
     {
-        return $this->model->with('roles')->latest()->get();
+        return $this->model->with('roles')->latest()->get()
+            ->makeHidden(['id','created_at','updated_at','email_verified_at']);
     }
 
     public function getDatatableList()
@@ -35,11 +36,11 @@ class UserRepository extends BaseRepository
             return $data->roles->first()->name;
         })
         ->setRowId(function ($data) {
-            return $data->id;
+            return $data->uuid;
         })
         ->setRowClass(function ($data) {
             return "clickRow";
-        } )
+        })
         ->make(true);
     }
 
