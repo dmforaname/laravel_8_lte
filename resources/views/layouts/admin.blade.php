@@ -110,6 +110,7 @@
   </div>
 </div>
 <!-- ./Loader -->
+@stack('modals')
 <script src="{{ mix('js/admin/app.js') }}"></script> 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script src="{{ asset('js/admin/script.js') }}"></script> 

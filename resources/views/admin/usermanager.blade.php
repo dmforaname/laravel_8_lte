@@ -1,18 +1,17 @@
 @extends('layouts.admin')
-
 @section('content')
 
-<section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>User Manager</h1>
+    <section class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h1>User Manager</h1>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-</section>
+    </section>
 
-<section class="content">
+    <section class="content">
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
@@ -77,7 +76,10 @@
       </div>
     </section>
 
-<!-- edit modal -->
+@endsection
+
+@push('modals')
+<!-- edit modal --> 
 <div class="modal fade" id="ajaxModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -121,8 +123,8 @@
         </div>
     </div>
 </div>   
-<!-- end edit modal -->
-@endsection
+<!-- /.edit modal -->
+@endpush
 
 @push('scripts')
 <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
@@ -205,6 +207,8 @@ function listRoles(role)
       async : true,
       dataType : 'json',
       success: function(data){
+
+        var data = data.data
         
         var html = '';
         var i;
