@@ -37,10 +37,17 @@
 @push('scripts')
 <script>
 
-$.when(checkToken()).done(function (ct) {
+mainLoad()
+$("#overlay").fadeIn()
 
-    
-});
+function mainLoad()
+{
+  $.when(checkToken()).done(function (ct) {
+
+    console.log('Welcome')
+    $("#overlay").fadeOut();
+  });
+}
 
 </script>
 @endpush

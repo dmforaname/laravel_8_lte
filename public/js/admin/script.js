@@ -114,6 +114,10 @@ function getToken(){
       var x = 30;
       setCookie('token',data.data,x)
       setCookie("token_ttl", now.getTime() + (x * 24 * 60 * 60 * 1000),x)
+      setTimeout(function () {
+
+        mainLoad()
+        }, 1000);
     }
   });
 }

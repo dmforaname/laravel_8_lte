@@ -130,7 +130,7 @@
 <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap4.min.js"></script>
 <script>
-
+$("#overlay").fadeIn()
 var columns = [
         {data: 'DT_RowIndex', name: 'DT_RowIndex'},
         {data: 'name', name: 'name'},
@@ -144,11 +144,17 @@ $( "#collapsedCard" ).click(function() {
     onFocusForm("userName",200);
 });
 
-$.when(checkToken())
-  .always(function (ct) {
+mainLoad()
+
+function mainLoad()
+{
+  $.when(checkToken())
+  .done(function (ct) {
 
       getDataTables(url,columns)
+      $("#overlay").fadeOut()
   });
+}
 
 $(document).ready(function() {
 
