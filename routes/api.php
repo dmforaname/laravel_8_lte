@@ -22,7 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/users-check', [Api\UserController::class,'userCheck']);
 
 
-Route::middleware(['auth:sanctum'])->group(function () {
+Route::middleware(['auth:sanctum','abilities:admin'])->group(function () {
     
     Route::prefix('users')->name('UsersApi.')->group(function () {
     
