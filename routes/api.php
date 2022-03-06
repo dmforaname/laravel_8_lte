@@ -20,8 +20,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/users-check', [Api\UserController::class,'userCheck']);
-Route::get('/users/role', [Api\UserController::class,'getListRoles'])->name('Api.listRoles');
-Route::resource('/users', Api\UserController::class)->only(['index','show'])
-    ->middleware('auth:sanctum')
-    ->parameters(['users' => 'uuid']);
-Route::post('/logout', [Api\UserController::class,'logout'])->middleware('auth:sanctum');
+
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    
+    Route::prefix('users')->name('UsersApi.')->group(function () {
+    
+        Route::get('/role', [Api\UserController::class,'getListRoles'])->name('listRoles');
+        Route::resource('', Api\UserController::class)->only(['index','show'])
+            ->parameters(['' => 'uuid']);
+    });
+
+    Route::post('/logout', [Api\UserController::class,'logout']);
+});

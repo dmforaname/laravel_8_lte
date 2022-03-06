@@ -137,7 +137,7 @@ var columns = [
         {data: 'email', name: 'email'},
         {data: 'roles', name: 'roles'},
     ];
-var url = "{{ route('users.index') }}";
+var url = "{{ route('UsersApi.index') }}";
 
 $( "#collapsedCard" ).click(function() {
 
@@ -183,6 +183,8 @@ $(document).ready(function() {
       error: function (data) {
           
           // Get error data
+          $("#overlay").fadeOut()
+          toastr.error('Failed To Load Data')
           console.log('Error:', data);
       }
     });
@@ -202,7 +204,7 @@ function listRoles(role)
 {
   return $.ajax({
       
-      url : "{{ route('Api.listRoles') }}",
+      url : "{{ route('UsersApi.listRoles') }}",
       method : "GET",
       async : true,
       dataType : 'json',
