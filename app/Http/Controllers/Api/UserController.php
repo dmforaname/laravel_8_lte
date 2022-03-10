@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Repositories\Api\UserRepository;
 use App\Traits\ApiResponser;
+use App\Http\Requests\UserUpdateRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Auth;
@@ -63,7 +64,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = $this->user->getByUuid($id)->makeHidden(['id','created_at','updated_at','email_verified_at']);
+        $user = $this->user->getByUuid($id)->makeHidden(['created_at','updated_at','email_verified_at']);
         $data = $this->user->getUserRole($user);
 
         return $this->success($data,trans('message.retrieve',['X' => 'User']));
@@ -84,12 +85,16 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  uuid  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(UserUpdateRequest $request, $id)
+    {   
+        $data = $this->user->getByUuid($id);
+        $data->update($request->validated());
+        $this->user->updateRole($data,$request);
+
+        return $this->success($data,trans('message.update',['X' => 'User']));
     }
 
     /**

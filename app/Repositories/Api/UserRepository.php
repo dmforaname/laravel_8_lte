@@ -59,4 +59,14 @@ class UserRepository extends BaseRepository
     {
         return Role::all()->pluck('name');
     }
+
+    public function updateRole($data,$request)
+    {
+        $role = self::getUserRole($data);
+        $data->removeRole($role['role']);
+        $data->assignRole($request->role);
+        return true;
+    }
+
+    
 }

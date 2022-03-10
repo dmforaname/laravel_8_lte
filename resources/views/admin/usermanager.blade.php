@@ -96,14 +96,14 @@
                   <div class="col-sm-12">
                       <input type="text" class="form-control" id="uuid" name="uuid" hidden>
                       <input type="text" class="form-control" id="nameView" name="name" placeholder="Enter First Name" maxlength="50">
-                      <small class="text-danger" id="firstNameEditError"></small>
+                      <small class="text-danger" id="nameError"></small>
                   </div>
               </div>
               <div class="form-group">
                   <label class="col-sm-2 control-label">Email</label>
                   <div class="col-sm-12">
                       <input type="email" id="emailView" name="email"  placeholder="Enter Email" class="form-control">
-                      <small class="text-danger" id="emailEditError"></small>
+                      <small class="text-danger" id="emailError"></small>
                   </div>
               </div>
               <div class="form-group">
@@ -115,8 +115,8 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="submit" id="edit-button" class="btn btn-primary" onclick="event.preventDefault(); clickEdit();">Edit</button>
-              <button type="submit" id="save-button" class="btn btn-success" onclick="event.preventDefault(); clickSave();">Save</button>
+              <button type="button" id="edit-button" class="btn btn-primary" onclick="event.preventDefault(); clickEdit();">Edit</button>
+              <button type="submit" id="save-button" class="btn btn-success">Save</button>
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
             </form>
@@ -229,6 +229,53 @@ function listRoles(role)
       }
   });
 }
+
+// Send edited data to backend
+$("#formEdit").submit(function(e){
+
+  e.preventDefault();
+  var uuid = $("input[name=uuid]").val();
+  var formData = new FormData(this);
+
+  // Send form value to backend
+  $.ajax({
+
+    type:'POST',
+    url:"/api/users/"+uuid,
+    headers: {"X-HTTP-Method-Override": "PUT"},
+    data: formData,
+    cache:false,
+    contentType: false,
+    processData: false,  
+    success:function(data){
+
+      // Hide ajax modal
+      $('#ajaxModal').modal('hide')
+      // Success message
+      toastr.success(data.message)
+      // Reload datatable
+      $('.dataTables').DataTable().ajax.reload()
+    },
+    error:function (e){
+
+      var err = e.responseJSON.errors
+
+      // Show error status on edit form
+      $('#nameError').text(err.name)
+      $('#emailError').text(err.email)
+      $('#roleError').text(err.role)
+    }
+  });
+});
+
+// Clear error status after close modal
+$('#ajaxModal').on('hidden.bs.modal', function () {
+
+  $('#emailError').text('')
+  $('#nameError').text('')
+  $('#roleError').text('')
+});
+
 </script>
 @endpush
 
