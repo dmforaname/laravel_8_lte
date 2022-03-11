@@ -265,6 +265,7 @@ function listRoles(role)
 $("#formEdit").submit(function(e){
 
   e.preventDefault();
+  $('#save-button').prop('disabled', true);
   var uuid = $("input[name=uuid]").val();
   var formData = new FormData(this);
 
@@ -286,6 +287,7 @@ $("#formEdit").submit(function(e){
       toastr.success(data.message)
       // Reload datatable
       $('.dataTables').DataTable().ajax.reload()
+      $('#save-button').prop('disabled', false);
     },
     error:function (e){
 
@@ -295,6 +297,7 @@ $("#formEdit").submit(function(e){
       $('#nameError').text(err.name)
       $('#emailError').text(err.email)
       $('#roleError').text(err.role)
+      $('#save-button').prop('disabled', false);
     }
   });
 });
@@ -330,6 +333,7 @@ $("#formInsert").submit(function(e){
     success:function(data){
 
       toastr.success(data.message)
+      $("#formInsert").trigger("reset");
       $('.dataTables').DataTable().ajax.reload()
       $('#storeButton').prop('disabled', false);
     },
