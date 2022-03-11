@@ -27,7 +27,7 @@ Route::middleware(['auth:sanctum','abilities:admin'])->group(function () {
     Route::prefix('users')->name('UsersApi.')->group(function () {
     
         Route::get('/role', [Api\UserController::class,'getListRoles'])->name('listRoles');
-        Route::resource('', Api\UserController::class)->only(['index','show','update'])
+        Route::resource('', Api\UserController::class)->only(['index','show','update','store'])
             ->parameters(['' => 'uuid']);
     });
 

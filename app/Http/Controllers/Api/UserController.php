@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Repositories\Api\UserRepository;
 use App\Traits\ApiResponser;
 use App\Http\Requests\UserUpdateRequest;
+use App\Http\Requests\UserStoreRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Auth;
@@ -51,9 +52,12 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserStoreRequest $request)
     {
-        //
+        $data = $this->user->create($request->validated());
+        $data->assignRole($request->role);
+
+        return $this->success($data,trans('message.create',['X' => 'User']));
     }
 
     /**

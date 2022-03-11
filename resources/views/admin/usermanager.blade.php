@@ -27,22 +27,43 @@
                     </div>
                 </div>
                 <div class="card-body" >
-                  <form method="POST" enctype="multipart/form-data" id="formInsert" action="javascript:void(0)" > 
+                  <form method="POST" enctype="multipart/form-data" id="formInsert" action="javascript:void(0)"> 
                       <div class="form-group col-12">
+                          <div class="row">
+                            
+                            <div class="form-group col-6">
+                                <label>Email</label>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Enter User Full Name">
+                                <small class="text-danger" id="emailStoreError"></small>
+                            </div>   
+                            <div class="form-group col-6">
+                                <label>Password</label>
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Enter password">
+                                <small class="text-danger" id="passwordStoreError"></small>
+                            </div>   
+                          </div>
                           <div class="row">
                             <div class="form-group col-6">
                                 <label>User Full Name</label>
                                 <input type="text" class="form-control" id="userName" name="name" placeholder="Enter User Full Name">
-                                <small class="text-danger" id="nameError"></small>
+                                <small class="text-danger" id="nameStoreError"></small>
+                            </div>   
+                            <div class="form-group col-6">
+                              <label>Role</label>
+                              <select class="form-control" id="role" name="role">
+                                
+                              </select>
+                              <small class="text-danger" id="roleStoreError"></small>
                             </div>   
                           </div>    
                       </div>
                       <div class="form-group col-6">
                           <button 
-                          type="button" 
-                          ref="submitButton"
+                          type="submit" 
                           class="btn btn-primary btn-flat"
+                          id="storeButton"
                           >Submit</button>
+                          
                       </div>
                   </form>
                 </div>
@@ -152,6 +173,7 @@ function mainLoad()
   .done(function (ct) {
 
       getDataTables(url,columns)
+      listRoles(null)
       $("#overlay").fadeOut()
   });
 }
@@ -218,14 +240,23 @@ function listRoles(role)
 
         var data = data.data
         
-        var html = '';
+        var html = ''
+        html += '<option value="" disabled selected>Select your option</option>';
         var i;
         for(i=0; i<data.length; i++){
             html += '<option value='+data[i]+'>'+data[i]+'</option>';
         }
-        $('#roleView').html(html);
-        // Set selected value
-        $('#roleView').val(role)
+
+        if (role){
+
+          $('#roleView').html(html);
+          // Set selected value
+          $('#roleView').val(role)
+        }else{
+
+          $('#role').html(html);
+        }
+        
       }
   });
 }
@@ -274,6 +305,45 @@ $('#ajaxModal').on('hidden.bs.modal', function () {
   $('#emailError').text('')
   $('#nameError').text('')
   $('#roleError').text('')
+});
+
+// Send new data to backend
+$("#formInsert").submit(function(e){
+
+  $('#storeButton').prop('disabled', true);
+  $('#nameStoreError').text('')
+  $('#emailStoreError').text('')
+  $('#roleStoreError').text('')
+  $('#passwordStoreError').text('')
+
+  e.preventDefault();
+  var formData = new FormData(this);
+
+  $.ajax({
+
+    type:'POST',
+    url:"/api/users/",
+    data: formData,
+    cache:false,
+    contentType: false,
+    processData: false,  
+    success:function(data){
+
+      toastr.success(data.message)
+      $('.dataTables').DataTable().ajax.reload()
+      $('#storeButton').prop('disabled', false);
+    },
+    error:function (e){
+
+      var err = e.responseJSON.errors
+
+      $('#nameStoreError').text(err.name)
+      $('#emailStoreError').text(err.email)
+      $('#roleStoreError').text(err.role)
+      $('#passwordStoreError').text(err.password)
+      $('#storeButton').prop('disabled', false);
+    }
+  });
 });
 
 </script>
