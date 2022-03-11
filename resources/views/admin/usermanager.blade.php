@@ -325,7 +325,7 @@ $("#formInsert").submit(function(e){
   $.ajax({
 
     type:'POST',
-    url:"/api/users/",
+    url:"{{ route('UsersApi.store') }}",
     data: formData,
     cache:false,
     contentType: false,
