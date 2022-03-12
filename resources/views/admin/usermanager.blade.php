@@ -417,6 +417,7 @@ $(document).ready(function() {
 $("#formResetPassword").submit(function(e){
 
   e.preventDefault();
+  $('#newPasswordError').text('')
   var uuid = $('.resetPasswordSubmit').attr('id');
   var formData = new FormData(this);
 
