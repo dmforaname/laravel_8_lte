@@ -33,26 +33,24 @@
                             
                             <div class="form-group col-6">
                                 <label>Email</label>
-                                <input type="email" class="form-control" id="email" name="email" placeholder="Enter User Full Name">
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Enter User Full Name" required>
                                 <small class="text-danger" id="emailStoreError"></small>
                             </div>   
                             <div class="form-group col-6">
                                 <label>Password</label>
-                                <input type="password" class="form-control" id="password" name="password" placeholder="Enter password">
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required minlength="6">
                                 <small class="text-danger" id="passwordStoreError"></small>
                             </div>   
                           </div>
                           <div class="row">
                             <div class="form-group col-6">
                                 <label>User Full Name</label>
-                                <input type="text" class="form-control" id="userName" name="name" placeholder="Enter User Full Name">
+                                <input type="text" class="form-control" id="userName" name="name" placeholder="Enter User Full Name" required minlength="3">
                                 <small class="text-danger" id="nameStoreError"></small>
                             </div>   
                             <div class="form-group col-6">
                               <label>Role</label>
-                              <select class="form-control" id="role" name="role">
-                                
-                              </select>
+                              <select class="form-control" id="role" name="role" required></select>
                               <small class="text-danger" id="roleStoreError"></small>
                             </div>   
                           </div>    
@@ -116,21 +114,21 @@
                   <label for="name" class="col-sm-4 control-label">Name</label>
                   <div class="col-sm-12">
                       <input type="text" class="form-control" id="uuid" name="uuid" hidden>
-                      <input type="text" class="form-control" id="nameView" name="name" placeholder="Enter First Name" maxlength="50">
+                      <input type="text" class="form-control" id="nameView" name="name" placeholder="Enter First Name" required minlength="3">
                       <small class="text-danger" id="nameError"></small>
                   </div>
               </div>
               <div class="form-group">
                   <label class="col-sm-2 control-label">Email</label>
                   <div class="col-sm-12">
-                      <input type="email" id="emailView" name="email"  placeholder="Enter Email" class="form-control">
+                      <input type="email" id="emailView" name="email"  placeholder="Enter Email" class="form-control" required>
                       <small class="text-danger" id="emailError"></small>
                   </div>
               </div>
               <div class="form-group">
                   <label for="role" class="col-sm-4 control-label">Role</label>
                   <div class="col-sm-12">
-                      <select class="form-control" id="roleView" name="role"></select>
+                      <select class="form-control" id="roleView" name="role" required></select>
                       <small class="text-danger" id="roleError"></small>
                   </div>
               </div>
@@ -286,38 +284,34 @@ $("#formEdit").submit(function(e){
       // Success message
       toastr.success(data.message)
       // Reload datatable
-      $('.dataTables').DataTable().ajax.reload()
-      $('#save-button').prop('disabled', false);
+      $('.dataTables').DataTable().ajax.reload(null, false)
     },
     error:function (e){
 
-      var err = e.responseJSON.errors
-
-      // Show error status on edit form
-      $('#nameError').text(err.name)
-      $('#emailError').text(err.email)
-      $('#roleError').text(err.role)
-      $('#save-button').prop('disabled', false);
+      editError(e.responseJSON.errors)
     }
   });
 });
 
+function editError(err)
+{
+  $('#nameError').text(err?err.name:"")
+  $('#emailError').text(err?err.email:"")
+  $('#roleError').text(err?err.role:"")
+  $('#save-button').prop('disabled', false)
+}
+
 // Clear error status after close modal
 $('#ajaxModal').on('hidden.bs.modal', function () {
 
-  $('#emailError').text('')
-  $('#nameError').text('')
-  $('#roleError').text('')
+  // reset form
+  editError()
 });
 
 // Send new data to backend
 $("#formInsert").submit(function(e){
 
-  $('#storeButton').prop('disabled', true);
-  $('#nameStoreError').text('')
-  $('#emailStoreError').text('')
-  $('#roleStoreError').text('')
-  $('#passwordStoreError').text('')
+  storeError()
 
   e.preventDefault();
   var formData = new FormData(this);
@@ -341,15 +335,19 @@ $("#formInsert").submit(function(e){
 
       var err = e.responseJSON.errors
 
-      $('#nameStoreError').text(err.name)
-      $('#emailStoreError').text(err.email)
-      $('#roleStoreError').text(err.role)
-      $('#passwordStoreError').text(err.password)
-      $('#storeButton').prop('disabled', false);
+      storeError(err)
     }
   });
 });
 
+function storeError(err){
+
+  $('#nameStoreError').text(err?err.name:"")
+  $('#emailStoreError').text(err?err.email:"")
+  $('#roleStoreError').text(err?err.role:"")
+  $('#passwordStoreError').text(err?err.password:"")
+  $('#storeButton').prop('disabled',err?false:true);
+}
 </script>
 @endpush
 

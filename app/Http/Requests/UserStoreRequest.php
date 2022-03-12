@@ -28,7 +28,7 @@ class UserStoreRequest extends FormRequest
             'email' => 'bail|required|unique:users,email',
             'name' => 'required|min:3',
             'role' => 'required',
-            'password' => 'required'
+            'password' => 'required|min:6'
         ];
     }
 
@@ -40,7 +40,6 @@ class UserStoreRequest extends FormRequest
     public function validated(): array
     {
         $data = parent::validated();
-        
         $data['password'] = bcrypt($data['password']);
         
         return $data;
