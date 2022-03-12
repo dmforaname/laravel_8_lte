@@ -166,14 +166,14 @@
               <div class="form-group">
                   <label for="name" class="col-sm-12 control-label">New Password</label>
                   <div class="col-sm-12">
-                      <input type="password" class="form-control" id="newPassword" name="password" placeholder="Enter New Password">
+                      <input type="password" class="form-control" id="newPassword" name="password" placeholder="Enter New Password" required minlength="6">
                       <small class="text-danger" id="newPasswordError"></small>
                   </div>
               </div>
               <div class="form-group">
                   <label class="col-sm-12 control-label">Confirm New Password</label>
                   <div class="col-sm-12">
-                      <input type="password" class="form-control" id="confirmNewPassword" name="password_confirmation"  placeholder="Enter Confirm New Password">
+                      <input type="password" class="form-control" id="confirmNewPassword" name="password_confirmation"  placeholder="Enter Confirm New Password" required minlength="6">
                       <!--<small class="text-danger" id="confirmNewPasswordError"></small>-->
                   </div>
               </div>
