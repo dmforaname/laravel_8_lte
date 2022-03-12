@@ -42,4 +42,11 @@ interface RepositoryInterface
      * @return mixed
      */
     public function firstOrCreate(array $first , array $create);
+
+    /**
+     * @param  string $uuid
+     *
+     * @return mixed
+     */
+    public function getByUuid(string $uuid);
 }

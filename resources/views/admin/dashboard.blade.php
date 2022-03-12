@@ -33,3 +33,21 @@
       </div>
     </section>
 @endsection
+
+@push('scripts')
+<script>
+
+mainLoad()
+$("#overlay").fadeIn()
+
+function mainLoad()
+{
+  $.when(checkToken()).done(function (ct) {
+
+    console.log('Welcome')
+    $("#overlay").fadeOut();
+  });
+}
+
+</script>
+@endpush

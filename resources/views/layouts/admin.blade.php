@@ -7,6 +7,7 @@
   <title>{{ config('app.name', 'GR Tech') }}</title>
 
   <link href="{{ mix('css/admin/style.css') }}" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
   @stack('styles')
 
 </head>
@@ -16,7 +17,8 @@
 
   <!-- Preloader -->
   <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+    <span class="spinner-grow text-info"></span>
+    <!--<img class="animation__shake" src="/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">-->
   </div>
 
   <!-- Navbar -->
@@ -42,7 +44,7 @@
                       <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                           <a class="dropdown-item" href="#">Dashboard</a>
                           <a class="dropdown-item" href="#">Edit Profile</a>
-                          <a class="dropdown-item" href="#">Log Out</a>
+                          <a class="dropdown-item" href="javascript:void(0)" onclick="event.preventDefault(); clickLogout();">Log Out</a>
                       </div>
                   </li>   
               </ul>
@@ -62,7 +64,7 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index1.html" class="brand-link">
-      <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <img src="/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">AdminLTE 3</span>
     </a>
 
@@ -71,7 +73,7 @@
       <!-- Sidebar user (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="dist/img/user4-128x128.jpg" class="img-circle elevation-2" alt="User Image">
+          <img src="/dist/img/user4-128x128.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <a href="javascript:void(0)" class="d-block"> {{ auth()->user()->name }} </a>
@@ -100,9 +102,18 @@
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
-
+<!-- Loader -->
+<div id="overlay">
+  <div class="cv-spinner">
+    <span class="spinner"></span>
+    <!--<img class="animation__shake" src="/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">-->
+  </div>
+</div>
+<!-- ./Loader -->
+@stack('modals')
 <script src="{{ mix('js/admin/app.js') }}"></script> 
-@stack('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script src="{{ asset('js/admin/script.js') }}"></script> 
+@stack('scripts')
 </body>
 </html>
