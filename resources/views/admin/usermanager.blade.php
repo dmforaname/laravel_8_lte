@@ -417,6 +417,7 @@ $(document).ready(function() {
 $("#formResetPassword").submit(function(e){
 
   e.preventDefault();
+  $('.resetPasswordSubmit').prop('disabled',true)
   $('#newPasswordError').text('')
   var uuid = $('.resetPasswordSubmit').attr('id');
   var formData = new FormData(this);
@@ -436,10 +437,12 @@ $("#formResetPassword").submit(function(e){
       $('#modalNewPassword').modal('hide')
       // Success message
       toastr.success(data.message)
+      $('.resetPasswordSubmit').prop('disabled',false)
     },
     error:function (e){
 
       $('#newPasswordError').text(e.responseJSON.errors.password)
+      $('.resetPasswordSubmit').prop('disabled',false)
     }
   });
 });
