@@ -7,6 +7,7 @@ use App\Repositories\Api\UserRepository;
 use App\Traits\ApiResponser;
 use App\Http\Requests\UserUpdateRequest;
 use App\Http\Requests\UserStoreRequest;
+use App\Http\Requests\UserPasswordResetRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Auth;
@@ -153,5 +154,20 @@ class UserController extends Controller
         $data = $this->user->getListRoles();
 
         return $this->success($data,trans('message.retrieve',['X' => 'roles']));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  uuid  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function resetPassword(UserPasswordResetRequest $request, $id)
+    {   
+        $data = $this->user->getByUuid($id);
+        $data->update($request->validated());
+
+        return $this->success($data,trans('message.update',['X' => 'User']));
     }
 }

@@ -29,6 +29,7 @@ Route::middleware(['auth:sanctum','abilities:admin'])->group(function () {
         Route::get('/role', [Api\UserController::class,'getListRoles'])->name('listRoles');
         Route::resource('', Api\UserController::class)->only(['index','show','update','store'])
             ->parameters(['' => 'uuid']);
+        Route::put('/password-reset/{uuid:uuid}',[Api\UserController::class,'resetPassword']);
     });
 
     Route::post('/logout', [Api\UserController::class,'logout']);

@@ -144,6 +144,49 @@
     </div>
 </div>   
 <!-- /.edit modal -->
+
+<!-- resetPassword --> 
+<div class="modal fade" id="modalNewPassword" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modalHeadingResetPassword"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form enctype="multipart/form-data" id="formResetPassword" action="javascript:void(0)" >  
+            <div class="modal-body">
+              <div class="form-group">
+                  <label class="col-sm-2 control-label">Email</label>
+                  <div class="col-sm-12">
+                      <input type="email" id="emailConfirm" placeholder="Enter Email" class="form-control">
+                  </div>
+              </div>
+              <div class="form-group">
+                  <label for="name" class="col-sm-12 control-label">New Password</label>
+                  <div class="col-sm-12">
+                      <input type="password" class="form-control" id="newPassword" name="password" placeholder="Enter New Password">
+                      <small class="text-danger" id="newPasswordError"></small>
+                  </div>
+              </div>
+              <div class="form-group">
+                  <label class="col-sm-12 control-label">Confirm New Password</label>
+                  <div class="col-sm-12">
+                      <input type="password" class="form-control" id="confirmNewPassword" name="password_confirmation"  placeholder="Enter Confirm New Password">
+                      <!--<small class="text-danger" id="confirmNewPasswordError"></small>-->
+                  </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success resetPasswordSubmit">Save</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>   
+<!-- /.resetPassword -->
 @endpush
 
 @push('scripts')
@@ -206,7 +249,7 @@ $(document).ready(function() {
           $('#emailView').val(data.email).prop('disabled', true);
           $('#roleView').prop('disabled', true);
           $("#edit-button").show();
-          $('.resetPassword').attr('id', data.uuid);
+          $('.resetPassword').attr('id', data.uuid+'|'+data.email);
         });
       },
       error: function (data) {
@@ -353,17 +396,59 @@ function storeError(err){
   $('#storeButton').prop('disabled',err?false:true);
 }
 
-
 $(document).ready(function() {
 
   $('.resetPassword').on('click', function () {
     
-    const id = $('.resetPassword').attr('id')    
-    console.log('reset',id)
-    
+    const getId = $('.resetPassword').attr('id')  
+    const newArr = getId.split("|")
+    const id = newArr[0]
+    const email = newArr[1]
+
+    $('#ajaxModal').modal('hide');
+    $('#modalNewPassword').modal('show');
+    $('#modalHeadingResetPassword').html("Reset Password");
+    $('#emailConfirm').val(email).prop('readonly',true)
+    $('.resetPasswordSubmit').attr('id', id);
   });
 });
 
+// Send new data to backend
+$("#formResetPassword").submit(function(e){
+
+  e.preventDefault();
+  var uuid = $('.resetPasswordSubmit').attr('id');
+  var formData = new FormData(this);
+  console.log(formData)
+  $.ajax({
+
+    type:'POST',
+    headers: {"X-HTTP-Method-Override": "PUT"},
+    url:"/api/users/password-reset/"+uuid,
+    data: formData,
+    cache:false,
+    contentType: false,
+    processData: false,  
+    success:function(data){
+
+      // Hide ajax modal
+      $('#modalNewPassword').modal('hide')
+      // Success message
+      toastr.success(data.message)
+    },
+    error:function (e){
+
+      $('#newPasswordError').text(e.responseJSON.errors.password)
+    }
+  });
+});
+
+$('#modalNewPassword').on('hidden.bs.modal', function () {
+
+  $('#newPassword').val('')
+  $('#confirmNewPassword').val('')
+  $('#newPasswordError').text('')
+});
 </script>
 @endpush
 
