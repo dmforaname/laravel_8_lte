@@ -134,6 +134,7 @@
               </div>
             </div>
             <div class="modal-footer">
+              <button type="button" class="btn btn-danger resetPassword">Reset Password</button>
               <button type="button" id="edit-button" class="btn btn-primary" onclick="event.preventDefault(); clickEdit();">Edit</button>
               <button type="submit" id="save-button" class="btn btn-success">Save</button>
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -182,6 +183,7 @@ $(document).ready(function() {
 
     $("#overlay").fadeIn();　
     $("#save-button").hide();
+    $(".resetPassword").show();
     
     trId = $(this).attr('id');
     // console.log('click ID : ',trId)
@@ -204,6 +206,7 @@ $(document).ready(function() {
           $('#emailView').val(data.email).prop('disabled', true);
           $('#roleView').prop('disabled', true);
           $("#edit-button").show();
+          $('.resetPassword').attr('id', data.uuid);
         });
       },
       error: function (data) {
@@ -224,6 +227,7 @@ function clickEdit()
   $('#roleView').prop('disabled', false);
   $("#edit-button").hide();
   $("#save-button").show();
+  $(".resetPassword").hide();
 }
 
 function listRoles(role)
@@ -348,6 +352,18 @@ function storeError(err){
   $('#passwordStoreError').text(err?err.password:"")
   $('#storeButton').prop('disabled',err?false:true);
 }
+
+
+$(document).ready(function() {
+
+  $('.resetPassword').on('click', function () {
+    
+    const id = $('.resetPassword').attr('id')    
+    console.log('reset',id)
+    
+  });
+});
+
 </script>
 @endpush
 
