@@ -5,6 +5,7 @@
 /public/css/admin/style.css
 /public/js/app.js
 /public/js/admin/app.js
+/public/mix-manifest.json
 /storage/*.key
 /vendor
 .env
@@ -20,3 +21,4 @@ yarn-error.log
 /docker-compose
 Dockerfile
 docker-compose.yml
+install.sh
