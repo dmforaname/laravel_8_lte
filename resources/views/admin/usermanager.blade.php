@@ -190,8 +190,7 @@
 @endpush
 
 @push('scripts')
-<script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap4.min.js"></script>
+
 <script>
 $("#overlay").fadeIn()
 var columns = [
@@ -204,7 +203,7 @@ var url = "{{ route('UsersApi.index') }}";
 
 $( "#collapsedCard" ).click(function() {
 
-    onFocusForm("userName",200);
+    onFocusForm("email",200);
 });
 
 mainLoad()
@@ -458,10 +457,9 @@ $('#modalNewPassword').on('hidden.bs.modal', function () {
 
 @push('styles')
 
-  <link href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap4.min.css" rel="stylesheet">
   <style> 
     .noField {
-      width: 5%;
+      width: 7%;
     }
   </style>
 @endpush
