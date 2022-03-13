@@ -9,10 +9,11 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use App\Traits\Uuid as uuidTrait;
+use App\Traits\Blameable;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, uuidTrait;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, uuidTrait, Blameable;
 
     /**
      * The attributes that are mass assignable.
@@ -33,6 +34,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'created_by',
+        'updated_by'
     ];
 
     /**
